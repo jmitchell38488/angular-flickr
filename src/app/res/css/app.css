@@ -71,11 +71,13 @@ h1 {
 }
 
 .thumb {
-    float: left;
-    height: 100px;
     margin: -0.5em 1em 1.5em 0;
     padding-bottom: 1em;
     width: 100px;
+}
+
+.thumbnail {
+    display: inline-block;
 }
 
 /* View: Phone detail */
@@ -144,4 +146,23 @@ h1 {
 .specs > li > span {
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.search-view {
+    padding-top: 11px;
+    display: block;
+}
+
+.search-view .input {
+    height: 25px;
+    padding-right: 30px;
+    display: block;
+    float:left;
+    background: url(../images/icon-search.png) no-repeat right center #fff;
+    width: 350px;
+}
+
+.search-view input {
+    min-width: 300px;
+    border: 0px;
 }
