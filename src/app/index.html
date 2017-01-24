@@ -2,13 +2,23 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Angular JS Test App</title>
+        <title>Angular Flickr App</title>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="res/css/app.css" />
         <link rel="stylesheet" href="res/css/app.animations.css" />
     </head>
 
     <body ng-app="app">
+        <div class="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="#/"></a>
+                </div>
+                <div class="search">
+                    <photo-search></photo-search>
+                </div>
+            </div>
+        </div>
         <div ng-view></div>
 
         <!-- JS Files -->
@@ -17,6 +27,7 @@
         <script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
         <!-- Application files -->
         <script src="js/application.js"></script>

@@ -1,152 +1,44 @@
 /// <reference path='_all.ts' />
 angular.module('app', [
-    'app.phones'
+    'app.core',
+    'app.flickr'
 ]);
 /// <reference path='../../_all.ts' />
 var app;
 (function (app) {
-    var phones;
-    (function (phones) {
-        var module = angular.module('app.phones', [
-            'ngRoute',
-            'ngAnimate'
-        ]);
-    })(phones = app.phones || (app.phones = {}));
+    var core;
+    (function (core) {
+        var module = angular.module('app.core', []);
+    })(core = app.core || (app.core = {}));
 })(app || (app = {}));
 ;
-/// <reference path='../../../_all.ts' />
-/// <reference path='../../../_all.ts' />
+/// <reference path='../../_all.ts' />
 var app;
 (function (app) {
-    var phones;
-    (function (phones) {
-        var PhoneRefDataService = (function () {
-            function PhoneRefDataService($http, $q) {
-                this.$http = $http;
-                this.$q = $q;
-                this.listUrl = '/res/phones/phones.json';
-                this.detailsUrl = '/res/phones/{id}.json';
-            }
-            PhoneRefDataService.prototype.getPhoneList = function () {
-                var d = this.$q.defer();
-                d.resolve(this.$http.get(this.listUrl));
-                return d.promise;
-            };
-            PhoneRefDataService.prototype.getPhoneDetails = function (config) {
-                var d = this.$q.defer();
-                var uri = this.detailsUrl.replace('{id}', config.id);
-                d.resolve(this.$http.get(uri));
-                return d.promise;
-            };
-            return PhoneRefDataService;
-        }());
-        phones.PhoneRefDataService = PhoneRefDataService;
-    })(phones = app.phones || (app.phones = {}));
-})(app || (app = {}));
-/// <reference path='../../../../_all.ts' />
-var app;
-(function (app) {
-    var phones;
-    (function (phones) {
-        angular
-            .module('app.phones')
-            .directive('phoneList', function () {
-            return {
-                restrict: 'AE',
-                controller: [
-                    '$rootScope',
-                    'app.phones.PhoneRefDataService',
-                    PhoneListController
-                ],
-                controllerAs: 'phoneListCtrl',
-                bindToController: {
-                    phone: '='
-                },
-                templateUrl: 'js/components/app.phones/directives/phoneList/template.html'
-            };
-        });
-        var PhoneListController = (function () {
-            function PhoneListController($rootScope, phoneDataService) {
-                var _this = this;
-                this.orderProp = 'age';
-                this.query = '';
-                phoneDataService
-                    .getPhoneList()
-                    .then(function (response) {
-                    _this.phoneList = response.data;
-                })
-                    .catch(function (reason) {
-                    console.log('Not loading ... ?');
-                });
-            }
-            return PhoneListController;
-        }());
-        phones.PhoneListController = PhoneListController;
-    })(phones = app.phones || (app.phones = {}));
-})(app || (app = {}));
-/// <reference path='../../../../_all.ts' />
-var app;
-(function (app) {
-    var phones;
-    (function (phones) {
-        angular
-            .module('app.phones')
-            .directive('phoneDetails', function () {
-            return {
-                restrict: 'AE',
-                controller: [
-                    '$routeParams',
-                    'app.phones.PhoneRefDataService',
-                    '$location',
-                    PhoneDetailsController
-                ],
-                controllerAs: 'phoneDetailsCtrl',
-                templateUrl: 'js/components/app.phones/directives/phoneDetails/template.html'
-            };
-        });
-        var PhoneDetailsController = (function () {
-            function PhoneDetailsController($routeParams, phoneDataService, $location) {
-                var _this = this;
-                this.phoneId = $routeParams['phoneId'];
-                phoneDataService
-                    .getPhoneDetails({ id: this.phoneId })
-                    .then(function (response) {
-                    // Redirect if the data was invalid
-                    if (!response.data || response.status >= 400) {
-                        $location.url('/phones');
-                    }
-                    _this.imageList = response.data.images;
-                    _this.currentImage = _this.imageList[0];
-                    _this.phoneDetails = response.data;
-                })
-                    .catch(function (reason) {
-                    $location.url('/phones');
-                });
-            }
-            return PhoneDetailsController;
-        }());
-        phones.PhoneDetailsController = PhoneDetailsController;
-    })(phones = app.phones || (app.phones = {}));
+    var core;
+    (function (core) {
+        var module = angular.module('app.core');
+    })(core = app.core || (app.core = {}));
 })(app || (app = {}));
 /// <reference path='../../../_all.ts' />
 var app;
 (function (app) {
-    var phones;
-    (function (phones) {
-        var module = angular.module('app.phones');
+    var core;
+    (function (core) {
+        var module = angular.module('app.core');
         module.filter('checkmark', function () {
             return function (input) {
                 return input ? '\u2713' : '\u2718';
             };
         });
-    })(phones = app.phones || (app.phones = {}));
+    })(core = app.core || (app.core = {}));
 })(app || (app = {}));
 /// <reference path='../../../_all.ts' />
 var app;
 (function (app) {
-    var phones;
-    (function (phones) {
-        var module = angular.module('app.phones');
+    var core;
+    (function (core) {
+        var module = angular.module('app.core');
         module.animation('.phone', function phoneAnimationFactory() {
             function animateIn(element, className, done) {
                 if (className !== 'selected') {
@@ -190,59 +82,195 @@ var app;
                 removeClass: animateOut
             };
         });
-    })(phones = app.phones || (app.phones = {}));
-})(app || (app = {}));
-/// <reference path='../../../_all.ts' />
-var app;
-(function (app) {
-    var phones;
-    (function (phones) {
-        var module = angular.module('app.phones');
-        module.config([
-            '$locationProvider', '$routeProvider',
-            function ($locationProvider, $routeProvider) {
-                $locationProvider.hashPrefix('!');
-                $routeProvider
-                    .when('/phones', {
-                    template: function () {
-                        return '<phone-list></phone-list>';
-                    },
-                    controller: 'app.phones.PhoneListController'
-                })
-                    .when('/phones/:phoneId', {
-                    template: function () {
-                        return '<phone-details></phone-details>';
-                    },
-                    controller: 'app.phones.PhoneDetailsController'
-                })
-                    .otherwise({
-                    redirectTo: '/phones'
-                });
-            }
-        ]);
-    })(phones = app.phones || (app.phones = {}));
+    })(core = app.core || (app.core = {}));
 })(app || (app = {}));
 /// <reference path='../../_all.ts' />
 var app;
 (function (app) {
-    var phones;
-    (function (phones) {
-        var module = angular.module('app.phones');
-        module.service('app.phones.PhoneRefDataService', [
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr', [
+            'ngRoute',
+            'ngAnimate',
+            'ngResource',
+            'ngSanitize',
+        ]);
+    })(flickr = app.flickr || (app.flickr = {}));
+})(app || (app = {}));
+;
+/// <reference path='../../_all.ts' />
+var app;
+(function (app) {
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr');
+        module.service('app.flickr.PhotoListRefService', [
             '$http', '$q',
-            function ($http, $q) { return new phones.PhoneRefDataService($http, $q); }
+            function ($http, $q) { return new app.flickr.PhotoListRefService($http, $q); }
         ]);
-        module.controller('app.phones.PhoneListController', [
-            '$rootScope', 'app.phones.PhoneRefDataService',
-            function ($rootScope, IPhoneRefDataService) { return new phones.PhoneListController($rootScope, IPhoneRefDataService); }
-        ]);
-        module.controller('app.phones.PhoneDetailsController', [
-            '$routeParams', 'app.phones.PhoneRefDataService', '$location',
-            function ($routeParams, IPhoneRefDataService, $location) {
-                return new phones.PhoneDetailsController($routeParams, IPhoneRefDataService, $location);
+    })(flickr = app.flickr || (app.flickr = {}));
+})(app || (app = {}));
+/// <reference path='../../../_all.ts' />
+/// <reference path='../../../../_all.ts' />
+var app;
+(function (app) {
+    var flickr;
+    (function (flickr) {
+        angular.module('app.flickr').directive('photoSearch', function () {
+            return {
+                restrict: 'AE',
+                controller: [
+                    '$scope',
+                    PhotoSearchController
+                ],
+                controllerAs: 'searchController',
+                templateUrl: 'js/components/app.flickr/directives/photoSearch/photoSearchView.html',
+                link: function ($scope, element, $attrs, controller) {
+                    $scope.$watch('query', function (data) {
+                        console.log('query data: ' + data);
+                    });
+                }
+            };
+        });
+        var PhotoSearchController = (function () {
+            function PhotoSearchController() {
+            }
+            return PhotoSearchController;
+        }());
+        flickr.PhotoSearchController = PhotoSearchController;
+    })(flickr = app.flickr || (app.flickr = {}));
+})(app || (app = {}));
+/// <reference path='../../../../_all.ts' />
+var app;
+(function (app) {
+    var flickr;
+    (function (flickr) {
+        angular
+            .module('app.flickr')
+            .directive('photoList', function () {
+            return {
+                restrict: 'AE',
+                controller: [
+                    '$scope',
+                    'app.flickr.PhotoListRefService',
+                    PhotoListController
+                ],
+                controllerAs: 'photoController',
+                templateUrl: 'js/components/app.flickr/directives/photoList/photoListView.html',
+                link: function ($scope, element, $attrs, controller) {
+                    $scope.$watch('query', function (query) {
+                        console.log(query);
+                        controller.fetch();
+                    });
+                }
+            };
+        });
+        var PhotoListController = (function () {
+            function PhotoListController($scope, photoSearchService) {
+                this.$scope = $scope;
+                this.photoSearchService = photoSearchService;
+                this.fetch();
+            }
+            PhotoListController.prototype.fetch = function () {
+                var _this = this;
+                this.photoSearchService
+                    .getPhotoList({ tags: this.$scope.query })
+                    .then(function (data) {
+                    _this.photoList = data.data.items;
+                })
+                    .catch(function (reason) {
+                    console.log('Couldn\'t load for reason...');
+                    console.log(reason);
+                });
+            };
+            return PhotoListController;
+        }());
+        flickr.PhotoListController = PhotoListController;
+    })(flickr = app.flickr || (app.flickr = {}));
+})(app || (app = {}));
+/// <reference path='../../../_all.ts' />
+var app;
+(function (app) {
+    var flickr;
+    (function (flickr) {
+        var PhotoListRefService = (function () {
+            function PhotoListRefService($http, $q) {
+                this.$http = $http;
+                this.$q = $q;
+                this.searchUri = 'http://api.flickr.com/services/feeds/photos_public.gne';
+            }
+            PhotoListRefService.prototype.getPhotoList = function (query) {
+                var config = {
+                    params: {
+                        format: 'json',
+                        tags: query.tags,
+                        tagmode: 'any',
+                        jsoncallback: 'JSON_CALLBACK'
+                    }
+                };
+                return this.$http.jsonp(this.searchUri, config);
+                /*
+    
+                let d = this.$q.defer();
+                this.$http.jsonp(this.searchUri, config)
+                    .success((data) => {
+                        d.resolve(data);
+                    })
+                    .error((data) => {
+                        d.reject(data);
+                    });
+    
+                return d.promise;
+    
+                */
+                /*
+    
+                let d = this.$q.defer();
+                this.$http.jsonp(uri)
+                    .success((data) => {
+                        d.resolve(data);
+                    });
+    
+                return d.promise;*/
+            };
+            return PhotoListRefService;
+        }());
+        flickr.PhotoListRefService = PhotoListRefService;
+    })(flickr = app.flickr || (app.flickr = {}));
+})(app || (app = {}));
+/// <reference path='../../../_all.ts' />
+var app;
+(function (app) {
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr');
+        module.config([
+            '$locationProvider', '$routeProvider', '$sceDelegateProvider',
+            function ($locationProvider, $routeProvider, $sceDelegateProvider) {
+                $locationProvider.hashPrefix('!');
+                $sceDelegateProvider.resourceUrlWhitelist([
+                    'self',
+                    'http://api.flickr.com/**',
+                    'http://*.staticflickr.com/**',
+                    'http://*.flickr.com/**'
+                ]);
+                $routeProvider
+                    .when('/', {
+                    template: function () {
+                        return '<photo-list></photo-list>';
+                    }
+                })
+                    .when('/photo/:photoId', {
+                    template: function () {
+                        return '<photo-details></photo-details>';
+                    }
+                })
+                    .otherwise({
+                    redirectTo: '/'
+                });
             }
         ]);
-    })(phones = app.phones || (app.phones = {}));
+    })(flickr = app.flickr || (app.flickr = {}));
 })(app || (app = {}));
 /// <reference path='../../../typings/jquery/jquery.d.ts' />
 /// <reference path='../../../typings/angularjs/angular.d.ts' />
@@ -250,13 +278,15 @@ var app;
 /// <reference path='../../../typings/angularjs/angular-resource.d.ts' />
 /// <reference path='../../../typings/angularjs/angular-animate.d.ts' />
 /// <reference path='app.ts' />
-/// <reference path='components/app.phones/module.ts' />
-/// <reference path='components/app.phones/domain/PhoneModel.ts' />
-/// <reference path='components/app.phones/services/PhoneRefDataService.ts' />
-/// <reference path='components/app.phones/directives/phoneList/PhoneListController.ts' />
-/// <reference path='components/app.phones/directives/phoneDetails/PhoneDetailsController.ts' />
-/// <reference path='components/app.phones/filters/CheckmarkFilter.ts' />
-/// <reference path='components/app.phones/animations/ImageGalleryAnimation.ts' />
-/// <reference path='components/app.phones/config/Config.ts' />
-/// <reference path='components/app.phones/component.ts' />
+/// <reference path='components/app.core/module.ts' />
+/// <reference path='components/app.core/component.ts' />
+/// <reference path='components/app.core/filters/CheckmarkFilter.ts' />
+/// <reference path='components/app.core/animations/ImageGalleryAnimation.ts' />
+/// <reference path='components/app.flickr/module.ts' />
+/// <reference path='components/app.flickr/component.ts' />
+/// <reference path='components/app.flickr/domain/FlickrModel.ts' />
+/// <reference path='components/app.flickr/directives/photoSearch/photoSearchController.ts' />
+/// <reference path='components/app.flickr/directives/photoList/photoListController.ts' />
+/// <reference path='components/app.flickr/services/photoListRefService.ts' />
+/// <reference path='components/app.flickr/config/Config.ts' />
 //# sourceMappingURL=application.js.map

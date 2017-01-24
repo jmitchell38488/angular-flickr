@@ -1,5 +1,6 @@
 /// <reference path='_all.ts' />
 
 angular.module('app', [
-    'app.phones'
+    'app.core',
+    'app.flickr'
 ]);

@@ -1,0 +1,21 @@
+<div class="container-fluid" ng-if="photoController.photoList">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="photos">
+                <li class="thumbnail photo-list-item"
+                    ng-repeat="photo in photoController.photoList |
+                    filter: $scope.query" >
+                    <a href="#!/photo/{{photo.link}}" class="thumb">
+                        <img ng-src="{{ photo.media.m }}"/>
+                    </a>
+
+                    <a href="#!/photo/{{photo.link}}">
+                        <span>{{photo.title}}</span>
+                    </a>
+
+                    <!--<div ng-bind-html="photo.description"></div>-->
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

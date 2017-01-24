@@ -1,8 +1,8 @@
 /// <reference path='../../../_all.ts' />
 
-namespace app.phones {
+namespace app.core {
 
-    var module: angular.IModule = angular.module('app.phones');
+    var module: angular.IModule = angular.module('app.core');
 
     module.animation('.phone', function phoneAnimationFactory(): ng.animate.IAnimateCallbackObject {
 
