@@ -1,17 +1,25 @@
 <div class="container-fluid" ng-if="photoController.photoList">
     <div class="row">
-        <div class="col-md-12">
-            <ul class="photos">
-                <li class="thumbnail photo-list-item"
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="photos">
+                <div class="thumbnail photo-list-item"
                     ng-repeat="photo in photoController.photoList |
                     filter: $scope.query" >
-                    <div class="thumb">
+                    <div class="thumb" style="background-image: url('{{ photo.media.m }}')">
+                        <div class="overlay">
+                            <div class="title">{{photo.title | limitTo : 25 : 0}}</div>
+                        </div>
+                    </div>
+
+                    <!--<div class="thumb">
                         <img class="animate" ng-src="{{ photo.media.m }}"/>
                     </div>
 
-                    <div class="title">{{photo.title}}</div>
-                </li>
-            </ul>
+                    <div class="title">{{photo.title | limitTo : 25 : 0}}</div>-->
+                </div>
+            </div>
         </div>
+        <div class="col-md-2"></div>
     </div>
 </div>
