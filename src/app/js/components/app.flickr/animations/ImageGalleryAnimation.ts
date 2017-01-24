@@ -1,10 +1,10 @@
 /// <reference path='../../../_all.ts' />
 
-namespace app.core {
+namespace app.flickr {
 
-    var module: angular.IModule = angular.module('app.core');
+    var module: angular.IModule = angular.module('app.flickr');
 
-    module.animation('.phone', function phoneAnimationFactory(): ng.animate.IAnimateCallbackObject {
+    module.animation('.animate', (): ng.animate.IAnimateCallbackObject =>  {
 
         function animateIn(element: JQuery, className: string, done: Function): any {
             if (className !== 'selected') {

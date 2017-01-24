@@ -9,6 +9,4 @@ namespace app.flickr {
         ($http, $q) => new app.flickr.PhotoListRefService($http, $q)
     ]);
 
-//private $resource: ng.resource.IResource
-
 }

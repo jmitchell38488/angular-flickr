@@ -5,15 +5,11 @@
                 <li class="thumbnail photo-list-item"
                     ng-repeat="photo in photoController.photoList |
                     filter: $scope.query" >
-                    <a href="#!/photo/{{photo.link}}" class="thumb">
-                        <img ng-src="{{ photo.media.m }}"/>
-                    </a>
+                    <div class="thumb">
+                        <img class="animate" ng-src="{{ photo.media.m }}"/>
+                    </div>
 
-                    <a href="#!/photo/{{photo.link}}">
-                        <span>{{photo.title}}</span>
-                    </a>
-
-                    <!--<div ng-bind-html="photo.description"></div>-->
+                    <div class="title">{{photo.title}}</div>
                 </li>
             </ul>
         </div>

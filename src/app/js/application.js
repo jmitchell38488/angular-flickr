@@ -1,45 +1,41 @@
 /// <reference path='_all.ts' />
 angular.module('app', [
-    'app.core',
     'app.flickr'
 ]);
 /// <reference path='../../_all.ts' />
 var app;
 (function (app) {
-    var core;
-    (function (core) {
-        var module = angular.module('app.core', []);
-    })(core = app.core || (app.core = {}));
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr', [
+            'ngRoute',
+            'ngAnimate',
+            'ngResource',
+            'ngSanitize',
+        ]);
+    })(flickr = app.flickr || (app.flickr = {}));
 })(app || (app = {}));
 ;
 /// <reference path='../../_all.ts' />
 var app;
 (function (app) {
-    var core;
-    (function (core) {
-        var module = angular.module('app.core');
-    })(core = app.core || (app.core = {}));
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr');
+        module.service('app.flickr.PhotoListRefService', [
+            '$http', '$q',
+            function ($http, $q) { return new app.flickr.PhotoListRefService($http, $q); }
+        ]);
+    })(flickr = app.flickr || (app.flickr = {}));
 })(app || (app = {}));
+/// <reference path='../../../_all.ts' />
 /// <reference path='../../../_all.ts' />
 var app;
 (function (app) {
-    var core;
-    (function (core) {
-        var module = angular.module('app.core');
-        module.filter('checkmark', function () {
-            return function (input) {
-                return input ? '\u2713' : '\u2718';
-            };
-        });
-    })(core = app.core || (app.core = {}));
-})(app || (app = {}));
-/// <reference path='../../../_all.ts' />
-var app;
-(function (app) {
-    var core;
-    (function (core) {
-        var module = angular.module('app.core');
-        module.animation('.phone', function phoneAnimationFactory() {
+    var flickr;
+    (function (flickr) {
+        var module = angular.module('app.flickr');
+        module.animation('.animate', function () {
             function animateIn(element, className, done) {
                 if (className !== 'selected') {
                     return;
@@ -82,35 +78,8 @@ var app;
                 removeClass: animateOut
             };
         });
-    })(core = app.core || (app.core = {}));
-})(app || (app = {}));
-/// <reference path='../../_all.ts' />
-var app;
-(function (app) {
-    var flickr;
-    (function (flickr) {
-        var module = angular.module('app.flickr', [
-            'ngRoute',
-            'ngAnimate',
-            'ngResource',
-            'ngSanitize',
-        ]);
     })(flickr = app.flickr || (app.flickr = {}));
 })(app || (app = {}));
-;
-/// <reference path='../../_all.ts' />
-var app;
-(function (app) {
-    var flickr;
-    (function (flickr) {
-        var module = angular.module('app.flickr');
-        module.service('app.flickr.PhotoListRefService', [
-            '$http', '$q',
-            function ($http, $q) { return new app.flickr.PhotoListRefService($http, $q); }
-        ]);
-    })(flickr = app.flickr || (app.flickr = {}));
-})(app || (app = {}));
-/// <reference path='../../../_all.ts' />
 /// <reference path='../../../../_all.ts' />
 var app;
 (function (app) {
@@ -278,13 +247,10 @@ var app;
 /// <reference path='../../../typings/angularjs/angular-resource.d.ts' />
 /// <reference path='../../../typings/angularjs/angular-animate.d.ts' />
 /// <reference path='app.ts' />
-/// <reference path='components/app.core/module.ts' />
-/// <reference path='components/app.core/component.ts' />
-/// <reference path='components/app.core/filters/CheckmarkFilter.ts' />
-/// <reference path='components/app.core/animations/ImageGalleryAnimation.ts' />
 /// <reference path='components/app.flickr/module.ts' />
 /// <reference path='components/app.flickr/component.ts' />
 /// <reference path='components/app.flickr/domain/FlickrModel.ts' />
+/// <reference path='components/app.flickr/animations/ImageGalleryAnimation.ts' />
 /// <reference path='components/app.flickr/directives/photoSearch/photoSearchController.ts' />
 /// <reference path='components/app.flickr/directives/photoList/photoListController.ts' />
 /// <reference path='components/app.flickr/services/photoListRefService.ts' />
