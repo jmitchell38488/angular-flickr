@@ -6,17 +6,11 @@
                 <div class="thumbnail photo-list-item"
                     ng-repeat="photo in photoController.photoList |
                     filter: $scope.query" >
-                    <div class="thumb" style="background-image: url('{{ photo.media.m }}')">
+                    <a class="thumb" style="background-image: url('{{ photo.media.m }}')" href="{{ photo.link }}" target="_blank">
                         <div class="overlay">
-                            <div class="title">{{photo.title | limitTo : 25 : 0}}</div>
+                            <div class="title">{{photo.title | limitTo : 50 : 0}}<span ng-if="photo.title.length > 50">...</span></div>
                         </div>
-                    </div>
-
-                    <!--<div class="thumb">
-                        <img class="animate" ng-src="{{ photo.media.m }}"/>
-                    </div>
-
-                    <div class="title">{{photo.title | limitTo : 25 : 0}}</div>-->
+                    </a>
                 </div>
             </div>
         </div>
